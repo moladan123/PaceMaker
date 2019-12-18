@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import com.example.myapplication.gameobjects.Wall
 import kotlin.random.Random
@@ -29,6 +30,13 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             val r = Rect(i*100, i*100, i*100 + 100, i*100 + 100)
             objectPool.add(Wall(paint, r))
         }
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+
+
+        invalidate()
+        return super.onTouchEvent(event)
     }
 
     override fun onDraw(canvas: Canvas) {
