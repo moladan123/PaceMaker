@@ -13,7 +13,5 @@ class MainActivity : AppCompatActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
 
         setContentView(R.layout.sample_canvas_view)
-
-        println("eell")
     }
 }
