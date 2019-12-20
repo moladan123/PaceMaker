@@ -9,6 +9,8 @@ import java.util.HashMap
 /**
  * Singleton class used to load resources, currently does not do any garbage collection
  * so if too many things are loaded at once it could cause memory leak
+ *
+ * TODO turn into an LRU cache so that unused textures are freed and prevent memory leaks
  */
 class GameResourceManager(private val context: Context) {
 

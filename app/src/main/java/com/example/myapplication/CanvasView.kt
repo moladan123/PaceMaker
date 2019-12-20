@@ -9,6 +9,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
+import com.example.myapplication.gameobjects.Player
 import com.example.myapplication.gameobjects.Wall
 import kotlin.concurrent.thread
 import kotlin.random.Random
@@ -19,7 +20,7 @@ const val FRAMES_PER_SECOND = 2
 
 class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-    private var gameState = GameState(context)
+    private var gameState = GameState(context, this)
 
     private var paint = Paint()
 
@@ -34,12 +35,20 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
      * Create all of the gameobjects here
      */
     private fun initializeGamestate() {
+        gameState.levelNumber = 1
+
         paint.color = BLACK
-        for (i in 1..5) {
-            gameState.objectPool[i.toString()] = Wall(gameState, Rect(i*100, i*100, (i+1)*100, (i+1)*100))
+        for (j in 1..5) {
+            for (i in 1..5) {
+                gameState.objectPool[i.toString() + j.toString()] = Wall(gameState, Rect(i * 100, j * 100, (i + 1) * 100, (j + 1) * 100))
+            }
         }
+        gameState.objectPool["player"] = Player(gameState, Rect(800, 1000, 900, 1200))
     }
 
+    /**
+     * Creates a new thread for the game logic, keeps a consistent UPS
+     */
     private fun gameLoop() {
         while(true) {
             val start = SystemClock.elapsedRealtime()
