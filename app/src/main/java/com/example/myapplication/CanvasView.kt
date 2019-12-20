@@ -16,13 +16,11 @@ import kotlin.random.Random
 
 const val BLACK = -0x1000000
 
-const val FRAMES_PER_SECOND = 2
+const val FRAMES_PER_SECOND = 30
 
 class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private var gameState = GameState(context, this)
-
-    private var paint = Paint()
 
     init {
         initializeGamestate()
@@ -37,13 +35,12 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private fun initializeGamestate() {
         gameState.levelNumber = 1
 
-        paint.color = BLACK
         for (j in 1..5) {
             for (i in 1..5) {
-                gameState.objectPool[i.toString() + j.toString()] = Wall(gameState, Rect(i * 100, j * 100, (i + 1) * 100, (j + 1) * 100))
+                gameState.objectPool[i.toString() + j.toString()] = Wall(gameState, RectF(i * 100.0f, j * 100.0f, (i + 1) * 100.0f, (j + 1) * 100.0f))
             }
         }
-        gameState.objectPool["player"] = Player(gameState, Rect(800, 1000, 900, 1200))
+        gameState.objectPool["player"] = Player(gameState, RectF(800.0f, 1000.0f, 900.0f, 1200.0f))
     }
 
     /**
@@ -72,15 +69,33 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
+        val x = event!!.rawX
 
-        invalidate()
+        if (event!!.action == MotionEvent.ACTION_UP) {
+            gameState.moveLeft = false
+            gameState.moveRight = false
+        } else {
+            // should be able to move only on the edges of the screen
+            // Can refine this later
+            gameState.moveLeft = x < 400
+            gameState.moveRight = x > gameState.mWidth - 400 //TODO get rid of magic number
+        }
+
+        // TODO
+
+        println(MotionEvent.ACTION_DOWN)
+        println(MotionEvent.ACTION_MOVE)
+        println(MotionEvent.ACTION_UP)
+
+        print("Getting input ")
+        println(event.action)
+
         return super.onTouchEvent(event)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        paint.color = Random.nextInt() // just to test if stuff is changing or not
         for (gameObject in gameState.objectPool.values) {
             gameObject.draw(canvas)
         }
