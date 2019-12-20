@@ -1,11 +1,47 @@
 package com.example.myapplication
 
 import android.graphics.Canvas
+import android.graphics.Rect
+import android.graphics.RectF
 
-interface GameObject{
+abstract class GameObject{
 
-    fun update(gameState: GameState) {}
+    // The id corresponding to the sprite
+    abstract val imageID: Int
 
-    fun draw(canvas: Canvas)
+    // the bounds of the image to use ()
+    // Use this if you only need to use a portion of the image instead of the entire thing
+    protected val imgBounds: Rect? = null
+
+    // the location to draw to
+    abstract var bounds: RectF
+
+    // Game state that is passed from the main controller
+    abstract val gameState: GameState
+
+    // objects that are static will not update
+    // This is an optimization so walls do not update every single tick
+    abstract val isStatic: Boolean
+
+    /**
+     * Move the object
+     */
+    protected fun translate(x: Float, y: Float) {
+        bounds = RectF(bounds.left + x, bounds.top + y, bounds.right + x, bounds.bottom + y)
+    }
+
+    /**
+     * advance the state of the current object by one frame
+     * All of the game logic of this object rests here
+     */
+    abstract fun update(gameState: GameState)
+
+    /**
+     * Draws the object to the screen
+     */
+    fun draw(canvas: Canvas) {
+        val img = gameState.resources.getResource(imageID)
+        canvas.drawBitmap(img, imgBounds, bounds, null)
+    }
 
 }

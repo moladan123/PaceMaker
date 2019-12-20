@@ -1,14 +1,15 @@
 package com.example.myapplication.gameobjects
 
-import android.content.res.Resources
 import android.graphics.RectF
-import com.example.myapplication.GameSprite
+import com.example.myapplication.GameObject
 import com.example.myapplication.GameState
 import com.example.myapplication.R
 
 const val PLAYER_SPEED = 2.5f
 
-class Player(override val gameState: GameState, override var bounds: RectF) : GameSprite() {
+class Player(override val gameState: GameState, override var bounds: RectF) : GameObject() {
+    override val isStatic = false
+
     override val imageID = R.drawable.person
 
     override fun update(gameState: GameState) {

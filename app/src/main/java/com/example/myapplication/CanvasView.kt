@@ -32,10 +32,10 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
         for (j in 1..5) {
             for (i in 1..5) {
-                gameState.objectPool[i.toString() + j.toString()] = Wall(gameState, RectF(i * 100.0f, j * 100.0f, (i + 1) * 100.0f, (j + 1) * 100.0f))
+                gameState.objectPool.add(Wall(gameState, RectF(i * 100.0f, j * 100.0f, (i + 1) * 100.0f, (j + 1) * 100.0f)))
             }
         }
-        gameState.objectPool["player"] = Player(gameState, RectF(800.0f, 1000.0f, 900.0f, 1200.0f))
+        gameState.objectPool.add(Player(gameState, RectF(800.0f, 1000.0f, 900.0f, 1200.0f)))
     }
 
     /**
@@ -57,8 +57,12 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     private fun updateGamestate() {
-        for (gameObject in gameState.objectPool.values) {
-            gameObject.update(gameState)
+        for (id in gameState.objectPool.getPoolIds()) {
+            if (!gameState.objectPool.isStatic(id)) {
+                for (gameObject in gameState.objectPool.getObjects(id)) {
+                    gameObject.update(gameState)
+                }
+            }
         }
     }
 
@@ -91,8 +95,10 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        for (gameObject in gameState.objectPool.values) {
-            gameObject.draw(canvas)
+        for (id in gameState.objectPool.getPoolIds()) {
+            for (gameObject in gameState.objectPool.getObjects(id)) {
+                gameObject.draw(canvas)
+            }
         }
     }
 }

@@ -16,7 +16,7 @@ class GameState(context: Context) {
         A hashmap containing all the gameobjects
         Maps the objectid to the corresponding object
      */
-    var objectPool = HashMap<String, GameObject>()
+    var objectPool = ObjectPool()
 
     /**
         Controls, set to true by the view whenever a touch is inputted
