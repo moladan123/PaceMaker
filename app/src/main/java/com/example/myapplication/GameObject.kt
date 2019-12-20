@@ -4,7 +4,7 @@ import android.graphics.Canvas
 
 interface GameObject{
 
-    fun update(objectPool :Map<String, GameObject>) {}
+    fun update(gameState: GameState) {}
 
     fun draw(canvas: Canvas)
 
