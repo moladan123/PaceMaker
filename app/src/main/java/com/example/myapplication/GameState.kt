@@ -1,13 +1,14 @@
 package com.example.myapplication
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Rect
-import android.view.View
+import android.util.DisplayMetrics
 
 /**
  * Contains all of the information about the current game state
  */
-class GameState(context: Context, view: View) {
+class GameState(context: Context) {
 
     var resources = GameResourceManager(context)
 
@@ -33,8 +34,8 @@ class GameState(context: Context, view: View) {
     /**
      * Information on the camera
      */
-    val mWidth = view.width
-    val mHeight = view.height
+    val mWidth = Resources.getSystem().displayMetrics.widthPixels
+    val mHeight = Resources.getSystem().displayMetrics.heightPixels
     var cameraBounds: Rect = Rect(0, 0, mWidth, mHeight)
 
 }

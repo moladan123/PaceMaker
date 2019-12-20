@@ -1,26 +1,21 @@
 package com.example.myapplication
 
 import android.content.Context
-import android.graphics.*
-import android.graphics.drawable.Drawable
-import android.os.Build
+import android.graphics.Canvas
+import android.graphics.RectF
 import android.os.SystemClock
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import androidx.core.content.ContextCompat
 import com.example.myapplication.gameobjects.Player
 import com.example.myapplication.gameobjects.Wall
 import kotlin.concurrent.thread
-import kotlin.random.Random
-
-const val BLACK = -0x1000000
 
 const val FRAMES_PER_SECOND = 30
 
 class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-    private var gameState = GameState(context, this)
+    private var gameState = GameState(context)
 
     init {
         initializeGamestate()
