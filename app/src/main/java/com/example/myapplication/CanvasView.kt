@@ -7,6 +7,7 @@ import android.os.SystemClock
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.view.MotionEventCompat
 import com.example.myapplication.gameobjects.Player
 import com.example.myapplication.gameobjects.Wall
 import kotlin.concurrent.thread
@@ -67,8 +68,9 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-
         val x = event!!.rawX
+
+        val action: Int = event.action
 
         if (event!!.action == MotionEvent.ACTION_UP) {
             gameState.moveLeft = false
@@ -80,16 +82,7 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             gameState.moveRight = x > gameState.mWidth - 400 //TODO get rid of magic number
         }
 
-        // TODO
-
-        println(MotionEvent.ACTION_DOWN)
-        println(MotionEvent.ACTION_MOVE)
-        println(MotionEvent.ACTION_UP)
-
-        print("Getting input ")
-        println(event.action)
-
-        return super.onTouchEvent(event)
+        return true
     }
 
     override fun onDraw(canvas: Canvas) {
