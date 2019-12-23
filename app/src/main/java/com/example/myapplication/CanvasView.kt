@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.Canvas
 import android.graphics.RectF
 import android.os.SystemClock
@@ -17,6 +18,10 @@ const val FRAMES_PER_SECOND = 30
 class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private var gameState = GameState(context)
+
+
+    private val screenWidth = Resources.getSystem().displayMetrics.widthPixels
+    private val screenHeight = Resources.getSystem().displayMetrics.heightPixels
 
     init {
         initializeGamestate()
@@ -36,7 +41,7 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 gameState.objectPool.add(Wall(gameState, RectF(i * 100.0f, j * 100.0f, (i + 1) * 100.0f, (j + 1) * 100.0f)))
             }
         }
-        gameState.objectPool.add(Player(gameState, RectF(800.0f, 1000.0f, 900.0f, 1200.0f)))
+        gameState.objectPool.add(Player(gameState, RectF(800.0f, 300.0f, 900.0f, 500.0f)))
     }
 
     /**
@@ -70,26 +75,34 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         val x = event!!.rawX
 
-        val action: Int = event.action
-
-        if (event!!.action == MotionEvent.ACTION_UP) {
+        if (event.action == MotionEvent.ACTION_UP) {
             gameState.moveLeft = false
             gameState.moveRight = false
         } else {
             // should be able to move only on the edges of the screen
             // Can refine this later
-            gameState.moveLeft = x < 400
-            gameState.moveRight = x > gameState.mWidth - 400 //TODO get rid of magic number
+            gameState.moveLeft = x < screenWidth / 2
+            gameState.moveRight = x >= screenWidth/ 2
         }
 
         return true
+    }
+
+    private fun fitToScreen(bounds: RectF): RectF {
+        return RectF(bounds.left * gameState.levelWidth / screenWidth,
+                     bounds.top * gameState.levelHeight / screenHeight,
+                     bounds.right * gameState.levelWidth / screenWidth,
+                     bounds.bottom * gameState.levelWidth / screenWidth
+                )
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         for (id in gameState.objectPool.getPoolIds()) {
+            val img = gameState.resources.getResource(id)
             for (gameObject in gameState.objectPool.getObjects(id)) {
+                canvas.drawBitmap(img, gameObject.imgBounds, gameObject.bounds, null)
                 gameObject.draw(canvas)
             }
         }

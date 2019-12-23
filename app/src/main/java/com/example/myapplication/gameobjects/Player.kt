@@ -8,6 +8,7 @@ import com.example.myapplication.R
 const val PLAYER_SPEED = 2.5f
 
 class Player(override val gameState: GameState, override var bounds: RectF) : GameObject() {
+
     override val isStatic = false
 
     override val imageID = R.drawable.person
@@ -20,7 +21,7 @@ class Player(override val gameState: GameState, override var bounds: RectF) : Ga
         if (gameState.moveLeft) {
             translate( maxOf(-PLAYER_SPEED, -bounds.left), .0f)
         } else if (gameState.moveRight) {
-            translate( minOf(PLAYER_SPEED, gameState.mWidth - bounds.right), .0f)
+            translate( minOf(PLAYER_SPEED, gameState.levelWidth - bounds.right), .0f)
         }
 
         // TODO gravity

@@ -11,7 +11,7 @@ abstract class GameObject{
 
     // the bounds of the image to use ()
     // Use this if you only need to use a portion of the image instead of the entire thing
-    protected val imgBounds: Rect? = null
+    open val imgBounds: Rect? = null
 
     // the location to draw to
     abstract var bounds: RectF
@@ -34,7 +34,7 @@ abstract class GameObject{
      * advance the state of the current object by one frame
      * All of the game logic of this object rests here
      */
-    abstract fun update(gameState: GameState)
+    open fun update(gameState: GameState) {}
 
     /**
      * Draws the object to the screen

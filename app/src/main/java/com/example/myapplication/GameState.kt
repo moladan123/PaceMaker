@@ -32,10 +32,14 @@ class GameState(context: Context) {
     var levelNumber = 1
 
     /**
-     * Information on the camera
+     * Values describing how big the level is, by default
      */
-    val mWidth = Resources.getSystem().displayMetrics.widthPixels
-    val mHeight = Resources.getSystem().displayMetrics.heightPixels
-    var cameraBounds: Rect = Rect(0, 0, mWidth, mHeight)
+    var levelWidth = 1280
+    var levelHeight = 720
+
+    /**
+     * A rectangle describing where the camera is currently looking at
+     */
+    var cameraBounds: Rect = Rect(0, 0, levelWidth, levelHeight)
 
 }
