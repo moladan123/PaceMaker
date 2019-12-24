@@ -37,11 +37,14 @@ abstract class GameObject{
     open fun update(gameState: GameState) {}
 
     /**
-     * Draws the object to the screen
+     * Gets the actual coordinates of the screen (this is what is used to determine collision and is what is drawn to the screen)
      */
-    fun draw(canvas: Canvas) {
-        val img = gameState.resources.getResource(imageID)
-        canvas.drawBitmap(img, imgBounds, bounds, null)
+    open fun getScreenBounds(): RectF {
+        return RectF((bounds.left - gameState.cameraBounds.left) * (gameState.levelWidth/gameState.cameraBounds.right),
+                (bounds.top - gameState.cameraBounds.top) * (gameState.levelHeight / gameState.cameraBounds.bottom),
+                (bounds.right - gameState.cameraBounds.left) * (gameState.levelWidth / gameState.cameraBounds.right),
+                (bounds.bottom - gameState.cameraBounds.top) * (gameState.levelHeight / gameState.cameraBounds.bottom)
+                )
     }
 
 }

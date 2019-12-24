@@ -102,8 +102,7 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         for (id in gameState.objectPool.getPoolIds()) {
             val img = gameState.resources.getResource(id)
             for (gameObject in gameState.objectPool.getObjects(id)) {
-                canvas.drawBitmap(img, gameObject.imgBounds, gameObject.bounds, null)
-                gameObject.draw(canvas)
+                canvas.drawBitmap(img, gameObject.imgBounds, gameObject.getScreenBounds(), null)
             }
         }
     }
