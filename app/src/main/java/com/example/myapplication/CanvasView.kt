@@ -70,16 +70,11 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         val x = event!!.rawX
+        val y = event!!.rawY
 
-        if (event.action == MotionEvent.ACTION_UP) {
-            gameState.moveLeft = false
-            gameState.moveRight = false
-        } else {
-            // should be able to move only on the edges of the screen
-            // Can refine this later
-            gameState.moveLeft = x < screenWidth / 2
-            gameState.moveRight = x >= screenWidth/ 2
-        }
+        gameState.mouseX = x * gameState.levelWidth / screenWidth
+        gameState.mouseY = y * gameState.levelHeight / screenHeight
+        gameState.mouseDown = event.action != MotionEvent.ACTION_UP
 
         return true
     }

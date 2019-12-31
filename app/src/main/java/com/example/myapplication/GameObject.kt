@@ -23,6 +23,9 @@ abstract class GameObject{
     // This is an optimization so walls do not update every single tick
     abstract val isStatic: Boolean
 
+    // whether the object has collision or not
+    abstract val isSolid: Boolean
+
     /**
      * Move the object
      */

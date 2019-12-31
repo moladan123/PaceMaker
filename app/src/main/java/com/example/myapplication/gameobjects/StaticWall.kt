@@ -11,5 +11,6 @@ class StaticWall(override val gameState: GameState, initialBounds: RectF) : Game
     override var bounds: RectF
         get() = RectF()
         set(value) {}
-    override val isStatic: Boolean = true
+    override val isStatic = true
+    override val isSolid = true
 }

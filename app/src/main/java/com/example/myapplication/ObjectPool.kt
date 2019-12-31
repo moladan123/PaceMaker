@@ -12,9 +12,7 @@ class ObjectPool{
         val id = gameObject.imageID
         if (!pool.containsKey(id)) {
             pool[id] = ArrayList()
-            if (gameObject.isStatic) {
-                staticObjects.add(id)
-            }
+            if (gameObject.isStatic) { staticObjects.add(id) }
         }
         pool[id]!!.add(gameObject)
     }

@@ -19,11 +19,11 @@ class GameState(context: Context) {
     var objectPool = ObjectPool()
 
     /**
-        Controls, set to true by the view whenever a touch is inputted
-                  set to false by the view whenever a touch ends
+        Current state of screen input, show as world coordinates
      */
-    var moveLeft = false
-    var moveRight = false
+    var mouseX = 0f
+    var mouseY = 0f
+    var mouseDown = false
 
     /**
      * Describes which level the player is currently on

@@ -6,6 +6,8 @@ import com.example.myapplication.GameState
 import com.example.myapplication.R
 
 class Wall(override val gameState: GameState, override var bounds: RectF) : GameObject() {
+    override val isSolid = true
+
     override val isStatic = true
 
     override fun update(gameState: GameState) {}

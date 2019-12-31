@@ -13,18 +13,29 @@ class Player(override val gameState: GameState, override var bounds: RectF) : Ga
 
     override val imageID = R.drawable.person
 
+    override val isSolid = true
+
+    // downward acceleration and speed (gravity)
+    private val ax = 0.05f
+    private var vx  = 0f
+
     override fun update(gameState: GameState) {
 
-        //TODO add logic to check the player is not moving into something else
+        // gravity
+        vx += ax
+        translate(0f, vx)
 
-        // move left or right
-        if (gameState.moveLeft) {
-            translate( maxOf(-PLAYER_SPEED, -bounds.left), .0f)
-        } else if (gameState.moveRight) {
-            translate( minOf(PLAYER_SPEED, gameState.levelWidth - bounds.right), .0f)
+        // check if there is a solid object below
+        for (id in gameState.objectPool.getPoolIds()) {
+            for (gameObject in gameState.objectPool.getObjects(id)) {
+                if (gameObject.imageID != imageID && gameObject.isSolid && bounds.intersects(gameObject.bounds.left, gameObject.bounds.top, gameObject.bounds.right, gameObject.bounds.bottom)) {
+                    vx = 0f
+                    translate(0f, gameObject.bounds.top - this.bounds.bottom)
+                }
+            }
         }
 
-        // TODO gravity
+        //TODO add move left and right logic
 
     }
 }
