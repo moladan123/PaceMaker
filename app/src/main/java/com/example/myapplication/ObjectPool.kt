@@ -37,6 +37,13 @@ class ObjectPool{
         return staticObjects.contains(objectId)
     }
 
+    fun clear() {
+        pool.clear()
+        staticObjects.clear()
+
+        // TODO("Unload any resources that are not used in the next level")
+    }
+
 
 
 }

@@ -34,14 +34,7 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
      * Create all of the gameobjects here
      */
     private fun initializeGamestate() {
-        gameState.levelNumber = 1
-
-        for (j in 1..5) {
-            for (i in 1..5) {
-                gameState.objectPool.add(Wall(gameState, RectF(i * 100.0f, j * 100.0f, (i + 1) * 100.0f, (j + 1) * 100.0f)))
-            }
-        }
-        gameState.objectPool.add(Player(gameState, RectF(800.0f, 300.0f, 900.0f, 500.0f)))
+        gameState.nextLevel()
     }
 
     /**
@@ -62,6 +55,9 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         }
     }
 
+    /**
+     * Updates all the gameObjects in the pool
+     */
     private fun updateGamestate() {
         for (id in gameState.objectPool.getPoolIds()) {
             if (!gameState.objectPool.isStatic(id)) {
