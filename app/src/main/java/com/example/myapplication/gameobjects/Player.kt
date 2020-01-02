@@ -16,26 +16,40 @@ class Player(override val gameState: GameState, override var bounds: RectF) : Ga
     override val isSolid = true
 
     // downward acceleration and speed (gravity)
-    private val ax = 0.05f
-    private var vx  = 0f
+    private val ay = 0.05f
+    private var vy  = 0f
+
+    // movement in horizontal direction
+    private var vx = 2.5f
 
     override fun update(gameState: GameState) {
 
         // gravity
-        vx += ax
-        translate(0f, vx)
+        vy += ay
+        translate(0f, vy)
 
         // check if there is a solid object below
         for (id in gameState.objectPool.getPoolIds()) {
             for (gameObject in gameState.objectPool.getObjects(id)) {
                 if (gameObject.imageID != imageID && gameObject.isSolid && bounds.intersects(gameObject.bounds.left, gameObject.bounds.top, gameObject.bounds.right, gameObject.bounds.bottom)) {
-                    vx = 0f
+                    vy = 0f
                     translate(0f, gameObject.bounds.top - this.bounds.bottom)
+                    gameObject.onCollide(this)
                 }
             }
         }
 
-        //TODO add move left and right logic
+        // moves left and right (turns around whenever it hits a solid object)
+        translate(vx, 0f)
+        for (id in gameState.objectPool.getPoolIds()) {
+            for (gameObject in gameState.objectPool.getObjects(id)) {
+                if (gameObject.imageID != imageID && gameObject.isSolid && bounds.intersects(gameObject.bounds.left, gameObject.bounds.top, gameObject.bounds.right, gameObject.bounds.bottom)) {
+                    vx *= -1f
+                    translate(vx, 0f)
+                    gameObject.onCollide(this)
+                }
+            }
+        }
 
     }
 }

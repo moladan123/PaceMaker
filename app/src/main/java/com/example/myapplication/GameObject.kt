@@ -50,4 +50,9 @@ abstract class GameObject{
                 )
     }
 
+    /**
+     * Called whenever an object collides with it
+     */
+    open fun onCollide(other: GameObject) {}
+
 }

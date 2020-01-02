@@ -29,16 +29,8 @@ class GameState(context: Context) {
      * Describes which level the player is currently on
      * Use this if properties of something change with level
      */
-    var levelNumber = 0
-        private set
-
-    /**
-     * removes all gameobjects from the screen and initializes the next level
-     */
-    fun nextLevel() {
-        levelNumber++
-        initLevel(this, levelNumber)
-    }
+    var levelNumber = 1
+        set(value) {initLevel(this, levelNumber); field = value}
 
     /**
      * Values describing how big the level is, by default
@@ -50,6 +42,12 @@ class GameState(context: Context) {
      * A rectangle describing where the camera is currently looking at
      */
     var cameraBounds: Rect = Rect(0, 0, levelWidth, levelHeight)
+
+    /**
+     * Describes the amount of paint left in the brush
+     */
+    var maxPaint = 1000
+    var paintUsed = 0
 
 
 

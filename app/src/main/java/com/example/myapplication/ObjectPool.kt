@@ -36,8 +36,7 @@ class ObjectPool{
     }
 
     fun clear() {
-        pool.clear()
-        staticObjects.clear()
+        //pool.clear()
 
         // TODO("Unload any resources that are not used in the next level")
     }
