@@ -14,7 +14,7 @@ fun initLevel(gs: GameState, level: Int) {
 
 }
 
-const val WALL_WIDTH = 64f
+private const val WALL_WIDTH = 64f
 
 /**
  * Adds a border around the level
@@ -34,6 +34,8 @@ private fun border(gs: GameState) {
 
     gs.objectPool.add(Player(gs, RectF(428f, 428f, 492f, 492f)))
 
-    gs.objectPool.add(Flag(gs, RectF(gs.levelWidth - 3* WALL_WIDTH, gs.levelHeight - 2* WALL_WIDTH,
+    gs.objectPool.add(Flag(gs, RectF(gs.levelWidth - 3 * WALL_WIDTH, gs.levelHeight - 2 * WALL_WIDTH,
                                     gs.levelWidth - 2 * WALL_WIDTH, gs.levelHeight - WALL_WIDTH)))
+
+    gs.objectPool.add(DynamicWall(gs))
 }

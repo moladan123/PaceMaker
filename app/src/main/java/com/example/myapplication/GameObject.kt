@@ -55,4 +55,11 @@ abstract class GameObject{
      */
     open fun onCollide(other: GameObject) {}
 
+    /**
+     * Checks whether the current object overlaps with
+     */
+    open fun checkCollide(other: RectF): Boolean {
+        return other.intersects(other.left, other.top, other.right, other.bottom)
+    }
+
 }

@@ -95,6 +95,10 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             // draw all gameobjects
             for (id in gameState.objectPool.getPoolIds()) {
                 val img = gameState.resources.getResource(id)
+                if (id == R.drawable.static_wall) {
+                    val walls
+                }
+
                 for (gameObject in gameState.objectPool.getObjects(id)) {
                     canvas.drawBitmap(img, gameObject.imgBounds, gameObject.getScreenBounds(), null)
                 }

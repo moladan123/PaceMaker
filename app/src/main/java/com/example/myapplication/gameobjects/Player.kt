@@ -31,7 +31,7 @@ class Player(override val gameState: GameState, override var bounds: RectF) : Ga
         // check if there is a solid object below
         for (id in gameState.objectPool.getPoolIds()) {
             for (gameObject in gameState.objectPool.getObjects(id)) {
-                if (gameObject.imageID != imageID && gameObject.isSolid && bounds.intersects(gameObject.bounds.left, gameObject.bounds.top, gameObject.bounds.right, gameObject.bounds.bottom)) {
+                if (gameObject.imageID != imageID && gameObject.isSolid && gameObject.checkCollide(bounds)) {
                     vy = 0f
                     translate(0f, gameObject.bounds.top - this.bounds.bottom)
                     gameObject.onCollide(this)
@@ -43,7 +43,7 @@ class Player(override val gameState: GameState, override var bounds: RectF) : Ga
         translate(vx, 0f)
         for (id in gameState.objectPool.getPoolIds()) {
             for (gameObject in gameState.objectPool.getObjects(id)) {
-                if (gameObject.imageID != imageID && gameObject.isSolid && bounds.intersects(gameObject.bounds.left, gameObject.bounds.top, gameObject.bounds.right, gameObject.bounds.bottom)) {
+                if (gameObject.imageID != imageID && gameObject.isSolid && gameObject.checkCollide(bounds)) {
                     vx *= -1f
                     translate(vx, 0f)
                     gameObject.onCollide(this)
